@@ -37,7 +37,8 @@ Populate = {
 
 	fakeFromSchema: function( schema ){
 		
-		var fake = {};
+		var fake = {},
+			objectField = {};
 
 		_.each( schema , function( field, name ){
 
@@ -51,16 +52,16 @@ Populate = {
 				return;
 			}
 
+			if( field.type == Object ){
+				objectField[field.name] = {
+				};
+			}
+
 			if( (/\./).test( name ) ){
 				
-				_.each( name.split('.'), function( subNames, index ){
-					if( fake[] )
-					name = subNames;
-				});
-
-				fake[name] = {}
+			} else {
+				fake[name] = Populate.valueFromField( name, field );
 			}
-			fake[name] = Populate.valueFromField( name, field );
 		});
 
 		return fake;
