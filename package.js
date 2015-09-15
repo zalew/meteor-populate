@@ -13,7 +13,7 @@ Package.onUse(function(api) {
   api.use('digilord:faker');
   api.use('underscore');
   api.use('mongo');
-  api.addFiles('meteor-populate.js', 'server');
+  api.addFiles('meteor-populate.js', ['server','client']);
 });
 
 Package.onTest(function(api) {

@@ -16,18 +16,44 @@ Populate = {
 		
 		return equivalency / maxLength;
 
-	}
+	},
 
+	createFakeFromSchema: function( schema ){
+		
+		var fake = {};
+
+		_.each( schema , function( field, name ){
+
+			
+			if( field.hasOwnProperty( 'autoValue' ) && field.autoValue.constructor == Function ){
+				fake[field] = field.autoValue();
+				return;
+			}
+
+			if( field.hasOwnProperty( 'allowedValues' ) && field.allowedValues.constructor == Array ){
+				fake[field] = _.sample( field.allowedValues );
+				return;
+			}
+
+			Populate.createValueFromField( name, field );
+
+		});
+
+		return fake;
+	},
+
+	createValueFromField: function( name, field ){
+		//Code
+	}
 };
 
 
-Meteor.Collection.prototype.populate = function(){
+Meteor.Collection.prototype.populate = function( number ){
 	
 	var schema = this.simpleSchema();
 
 	if(!schema) return;
 
 	schema = schema._schema;
-	console.log( schema );
-
-}
+	Populate.createFakeFromSchema( schema );
+};
