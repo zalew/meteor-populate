@@ -10,10 +10,12 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
   api.imply('aldeed:simple-schema');
   api.imply('aldeed:collection2');
-  api.use('digilord:faker');
+  api.use('practicalmeteor:faker');
   api.use('underscore');
   api.use('mongo');
+  api.use('logging');
   api.addFiles('meteor-populate.js', ['server','client']);
+  api.export('Populate',['client','server']);
 });
 
 Package.onTest(function(api) {
