@@ -1,5 +1,3 @@
-faker.locale = Meteor.settings.locale || 'pt_BR';
-
 Populate = {
 
 	_fakerCategories: [
