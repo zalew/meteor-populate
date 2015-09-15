@@ -8,7 +8,12 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
-  api.addFiles('meteor-populate.js');
+  api.imply('aldeed:simple-schema');
+  api.imply('aldeed:collection2');
+  api.use('digilord:faker');
+  api.use('underscore');
+  api.use('mongo');
+  api.addFiles('meteor-populate.js', 'server');
 });
 
 Package.onTest(function(api) {
