@@ -40,55 +40,33 @@ Populate = {
 		var fake = {},
 			objectField = {};
 
-		console.log("--->",schema);
+		_.each( schema , function( field, name ){
 
+			if( field.hasOwnProperty( 'autoValue' ) && field.autoValue.constructor == Function ){
+				fake[name] = field.autoValue();
+				return;
+			}
 
-		_.each( schema, function( field, name ){
+			if( field.hasOwnProperty( 'allowedValues' ) && field.allowedValues.constructor == Array ){
+				fake[name] = _.sample( field.allowedValues );
+				return;
+			}
+
+			if( field.type == Object )
+				objectField[field.name] = {};
+			
+			if( field.type == Array )
+				objectField[field.name] = [];
 
 			if( (/\./).test( name ) ){
-
-				var split = name.split(/\.(.+)/),
-					objectName = split[0],
-					subItem = split[1],
-					defaultValue = subItem == '$' ? []: {};
-
-				if( !objectField.hasOwnProperty( objectName ) )
-					objectField[ objectName ] = defaultValue;
-
-				if( subItem == '$')
-					objectField[objectName].push(field[name], field);
-				else 
-					objectField[objectName][subItem] = field;
-
-			} else {
-				
-				if( field.hasOwnProperty( 'autoValue' ) && field.autoValue.constructor == Function ){
-					fake[name] = field.autoValue();
-					return;
-				}
-
-				if( field.hasOwnProperty( 'allowedValues' ) && field.allowedValues.constructor == Array ){
-					fake[name] = _.sample( field.allowedValues );
-					return;
-				}
-
-				console.log(field.type);
-
-				if( !field.type == Object && !field.type == Array )
-					objectField[name] = [];
-				else
-					fake[name] = Populate.valueFromField( name, field );
-				
-			}
+				var objectName = name.split('.');
+				objectField[objectName[0]][objectName[1]] = _.extend(field, { name: objectName[1] });
+			} else 
+				fake[name] = Populate.valueFromField( name, field );
+			
 		});
 
-		console.log("--->", objectField);
-
-		_.each(objectField, function( object, name ){
-			if( name && object.constructor == Object ){
-				fake[name] = Populate.fakeFromSchema(object);
-			}
-		});
+		console.log( objectField);
 
 		return fake;
 	},
@@ -120,18 +98,14 @@ Populate = {
 
 			valueToReturn = [];
 			
-			console.log( name, field );
-
 			_( _.random(minCount, maxCount) ).times(function(){
-				var type = field.type[0];
-				/*
-				if( type == Object )
-					valueToReturn.push({});
-				else 
-					valueToReturn.push( valueFromField( name, { type: field.type[0] } ) );
-				*/
+				valueToReturn.push( valueFromField( name, { type: field.type[0] } ) );
 			});
 
+		} else if( field.type == Object ){
+			valueToReturn = {};
+		} else if( field.type == Array ){
+			valueToReturn = [];
 		}
 		
 		return valueToReturn;
@@ -140,7 +114,7 @@ Populate = {
 	_valueFrom: {
 		string: function(name, field){
 			
-			/*var biggestEquivalency = 0,
+			var biggestEquivalency = 0,
 				biggestCategoryName = '',
 				biggestGeneratorName = '';
 
@@ -152,7 +126,7 @@ Populate = {
 						
 						var percent = Populate._compareNames( name, generatorName );
 						
-						if( percent > biggestEquivalency && percent > 0.5 ){
+						if( percent > biggestEquivalency && percent > 0.7 ){
 							biggestCategoryName = categoryName;
 							biggestGeneratorName = generatorName;
 						}
@@ -169,31 +143,6 @@ Populate = {
 			}
 
 			return faker[ biggestCategoryName ][ biggestGeneratorName ]();
-			*/
-			var toReturn = faker.internet.userName();
-
-			if( (/(user(name)?|name)/i).test( name ) )
-				toReturn = faker.name.findName();
-
-			if( (/email/i).test( name ) )
-				toReturn = faker.internet.email();
-
-			if( (/number/i).test( name ) )
-				toReturn = faker.random.number();
-
-			if( (/image/i).test(name) )
-				toReturn = faker.image.image();
-
-			if( (/description/i).test(name) )
-				toReturn = faker.lorem.sentence();
-
-			if( (/color/i).test(name) )
-				toReturn = faker.internet.color();
-
-			if( (/(code|password|id)/i).test(name) )
-				toReturn = Random.id();
-
-			return toReturn;
 		},
 		number: function( field ){
 			return _.random( field.min || 0, field.max || 1000 );
@@ -211,7 +160,7 @@ Populate = {
 Meteor.Collection.prototype.populate = function( number ){
 	
 	var schema = this.simpleSchema(),
-		number = Meteor.settings.populate || number || 1,
+		number = number || 1,
 		toReturn = [];
 
 	if(!schema) return;

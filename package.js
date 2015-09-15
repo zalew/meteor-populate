@@ -13,8 +13,9 @@ Package.onUse(function(api) {
   api.use('practicalmeteor:faker');
   api.use('underscore');
   api.use('mongo');
+  api.use('random');
   api.addFiles('lib/meteor-populate.js', ['server','client']);
-  api.addFiles('lib/meteor-filll.js', ['server','client']);
+  api.addFiles('lib/meteor-fill.js', ['server','client']);
   api.export('Populate',['client','server']);
 });
 
