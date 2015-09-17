@@ -27,3 +27,7 @@ Package.onTest(function(api) {
   api.use('gbit:populate');
   api.addFiles('tests/meteor-populate-tests.js');
 });
+
+Npm.depends({
+  'randexp': '0.4.0'
+});
