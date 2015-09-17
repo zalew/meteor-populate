@@ -9,14 +9,17 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
   api.imply('aldeed:simple-schema');
+  api.use('aldeed:simple-schema');
   api.imply('aldeed:collection2');
   api.use('practicalmeteor:faker');
   api.use('underscore');
+  api.use('check');
   api.use('mongo');
   api.use('random');
   api.addFiles('lib/meteor-populate.js', ['server','client']);
   api.addFiles('lib/meteor-fill.js', ['server','client']);
   api.export('Populate',['client','server']);
+  api.export('faker',['client','server']);
 });
 
 Package.onTest(function(api) {
