@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   api.use('mongo');
   api.use('random');
   api.addFiles('lib/meteor-populate.js', 'server');
+  api.addFiles('lib/meteor-populate-simple-schema.js', ['client','server']);
   api.export('Populate',['client','server']);
   api.export('faker',['client','server']);
 });
