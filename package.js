@@ -8,8 +8,9 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
-  api.imply('aldeed:simple-schema');
   api.use('aldeed:simple-schema');
+  api.use('check');
+  api.imply('aldeed:simple-schema');
   api.imply('aldeed:collection2');
   api.use('practicalmeteor:faker');
   api.use('underscore');

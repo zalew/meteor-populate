@@ -1,6 +1,6 @@
 Meteor Populate
 ===============
-Populate database with fake data using simpleSchema and Collection2 on Meteor
+Populate your database filling with fake datas using simpleSchema and Collection2 on Meteor
 
 
 ## Installation
