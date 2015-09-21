@@ -16,6 +16,12 @@ Populate database with fake data using simpleSchema and Collection2 on Meteor
 ```js
 
 Meteor.startup(function(){
+	// Say how much fakes you need
+	// Default is 3
+	Populate.amount = 5;
+
+	Products.populate();
+	// You can pass argument with number of fakes
 	Users.populate(3);
 	// Return 3 fake users and insert in your db if is empty
 });
