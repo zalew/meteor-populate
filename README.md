@@ -19,7 +19,7 @@ Meteor.startup(function(){
 	// Say how much fakes you need
 	// Default is 3
 	Populate.amount = 5;
-
+	// Insert five fakes
 	Products.populate();
 	// You can pass argument with number of fakes
 	Users.populate(3);
@@ -47,4 +47,15 @@ var Users =	new SimpleSchema({
 	}
 });
 
+```
+
+
+## You Can Generate a fake from SimpleSchema without save in database
+
+```js
+	Template.demo.helpers({
+		user: function(){
+			return Populate.fakeFromSchema( UserSchema );
+		}
+	});
 ```
