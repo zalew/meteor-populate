@@ -8,14 +8,20 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
-  api.imply('aldeed:simple-schema');
-  api.imply('aldeed:collection2');
+  api.use('aldeed:simple-schema');
+  api.use('check');
   api.use('practicalmeteor:faker');
   api.use('underscore');
   api.use('mongo');
-  api.addFiles('lib/meteor-populate.js', ['server','client']);
-  api.addFiles('lib/meteor-filll.js', ['server','client']);
+  api.addFiles([
+    // 'lib/meteor-fill.js',
+    // 'lib/meteor-populate.js',
+    'lib/simple-schema-extension.js'
+  ]);
+  api.imply('aldeed:simple-schema');  
+  api.imply('aldeed:collection2');
   api.export('Populate',['client','server']);
+  api.export('Fill',['client','server']);
 });
 
 Package.onTest(function(api) {
