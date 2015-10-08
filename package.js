@@ -12,7 +12,7 @@ Package.onUse(function(api) {
   api.use('check');
   api.imply('aldeed:simple-schema');
   api.imply('aldeed:collection2');
-  api.use('practicalmeteor:faker');
+  api.use('practicalmeteor:faker@3.0.1_1');
   api.use('underscore');
   api.use('check');
   api.use('mongo');
