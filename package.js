@@ -8,11 +8,11 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
-  api.use('aldeed:simple-schema');
+  api.use('aldeed:simple-schema@1.3.3');
   api.use('check');
-  api.imply('aldeed:simple-schema');
-  api.imply('aldeed:collection2');
-  api.use('practicalmeteor:faker');
+  api.imply('aldeed:simple-schema1.3.3');
+  api.imply('aldeed:collection2@2.5.0');
+  api.use('practicalmeteor:faker@3.0.1');
   api.use('underscore');
   api.use('check');
   api.use('mongo');
