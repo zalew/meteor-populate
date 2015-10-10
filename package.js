@@ -10,7 +10,7 @@ Package.onUse(function(api) {
   
   api.versionsFrom('1.1.0.3');
 
-  api.imply('aldeed:simple-schema1.3.3');
+  api.imply('aldeed:simple-schema@1.3.3');
   api.imply('aldeed:collection2@2.5.0');
 
   api.use('aldeed:simple-schema@1.3.3');
