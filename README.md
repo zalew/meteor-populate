@@ -53,9 +53,9 @@ var Users =	new SimpleSchema({
 ## You Can Generate a fake from SimpleSchema without save in database
 
 ```js
-	Template.demo.helpers({
-		user: function(){
-			return Populate.fakeFromSchema( UserSchema );
-		}
-	});
+Template.demo.helpers({
+	user: function(){
+		return Populate.fakeFromSchema( UserSchema );
+	}
+});
 ```
